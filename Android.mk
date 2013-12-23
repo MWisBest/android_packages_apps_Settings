@@ -10,16 +10,21 @@ LOCAL_SRC_FILES := $(call all-java-files-under, src) \
         src/com/android/settings/EventLogTags.logtags
 LOCAL_SRC_FILES += $(call all-java-files-under, ../OmniGears/src)
 LOCAL_SRC_FILES += $(call all-java-files-under, ../PerformanceControl/src)
+LOCAL_SRC_FILES += $(call all-java-files-under,../../../external/koush/Superuser/Superuser/src)
+LOCAL_SRC_FILES += $(call all-java-files-under,../../../external/koush/Widgets/Widgets/src)
 
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/res
 LOCAL_RESOURCE_DIR += packages/apps/OmniGears/res
 LOCAL_RESOURCE_DIR += packages/apps/PerformanceControl/res
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../external/koush/Widgets/Widgets/res
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../external/koush/Superuser/Superuser/res
 
 LOCAL_ASSET_DIR += packages/apps/PerformanceControl/assets
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay \
 	--extra-packages org.omnirom.omnigears \
-	--extra-packages com.brewcrewfoo.performance
+	--extra-packages com.brewcrewfoo.performance \
+	--extra-packages com.koushikdutta.superuser:com.koushikdutta.widgets
 
 LOCAL_PACKAGE_NAME := Settings
 LOCAL_CERTIFICATE := platform
@@ -28,10 +33,7 @@ LOCAL_PRIVILEGED_MODULE := true
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
-LOCAL_AAPT_FLAGS += -c zz_ZZ --extra-packages com.koushikdutta.superuser:com.koushikdutta.widgets --auto-add-overlay
-
-LOCAL_SRC_FILES += $(call all-java-files-under,../../../external/koush/Superuser/Superuser/src) $(call all-java-files-under,../../../external/koush/Widgets/Widgets/src)
-LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/res $(LOCAL_PATH)/../../../external/koush/Widgets/Widgets/res $(LOCAL_PATH)/../../../external/koush/Superuser/Superuser/res
+LOCAL_AAPT_FLAGS += -c zz_ZZ
 
 include $(BUILD_PACKAGE)
 
