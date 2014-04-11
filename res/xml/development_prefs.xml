@@ -302,6 +302,11 @@
             android:entries="@array/select_runtime_titles"
             android:entryValues="@array/select_runtime_values" />
 
+        <CheckBoxPreference
+            android:key="system_cache"
+            android:title="@string/system_cache_title"
+            android:summary="@string/system_cache_summary" />
+
         <ListPreference
             android:key="app_process_limit"
             android:title="@string/app_process_limit_title"

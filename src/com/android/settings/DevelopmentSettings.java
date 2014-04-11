@@ -146,6 +146,9 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final String ROOT_ACCESS_KEY = "root_access";
     private static final String ROOT_ACCESS_PROPERTY = "persist.sys.root_access";
 
+    private static final String SYSTEM_CACHE_KEY = "system_cache";
+    private static final String SYSTEM_CACHE_PROPERTY = "persist.dalvik.vm.dexopt-data-only";
+
     private static final String IMMEDIATELY_DESTROY_ACTIVITIES_KEY
             = "immediately_destroy_activities";
     private static final String APP_PROCESS_LIMIT_KEY = "app_process_limit";
@@ -222,6 +225,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
 
     private ListPreference mRootAccess;
     private Object mSelectedRootValue;
+
+    private CheckBoxPreference mSystemCache;
 
     private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
     private final ArrayList<CheckBoxPreference> mResetCbPrefs
@@ -330,6 +335,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mAnimatorDurationScale = addListPreference(ANIMATOR_DURATION_SCALE_KEY);
         mOverlayDisplayDevices = addListPreference(OVERLAY_DISPLAY_DEVICES_KEY);
         mOpenGLTraces = addListPreference(OPENGL_TRACES_KEY);
+        mSystemCache = findAndInitCheckboxPref(SYSTEM_CACHE_KEY);
 
         mImmediatelyDestroyActivities = (CheckBoxPreference) findPreference(
                 IMMEDIATELY_DESTROY_ACTIVITIES_KEY);
@@ -557,6 +563,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         updateWifiDisplayCertificationOptions();
         updateAdvancedRebootOptions();
         updateRootAccessOptions();
+        updateSystemCacheOptions();
     }
 
     private void resetAdvancedRebootOptions() {
@@ -1251,6 +1258,15 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             getActivity().getContentResolver(), Settings.Secure.ANR_SHOW_BACKGROUND, 0) != 0);
     }
 
+    private void writeSystemCacheOptions() {
+        SystemProperties.set(SYSTEM_CACHE_PROPERTY, mSystemCache.isChecked() ? "0" : "1");
+        pokeSystemProperties();
+    }
+
+    private void updateSystemCacheOptions() {
+        mSystemCache.setChecked(SystemProperties.getInt(SYSTEM_CACHE_PROPERTY, 1) == 0);
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView == mEnabledSwitch) {
@@ -1409,6 +1425,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             writeWifiDisplayCertificationOptions();
         } else if (preference == mAdvancedReboot) {
             writeAdvancedRebootOptions();
+        } else if (preference == mSystemCache) {
+            writeSystemCacheOptions();
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }

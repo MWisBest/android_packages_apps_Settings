@@ -4919,4 +4919,7 @@
     <string name="root_access_apps">Apps only</string>
     <string name="root_access_adb">ADB only</string>
     <string name="root_access_all">Apps and ADB</string>
+
+    <string name="system_cache_title">DexOpt /system to /cache</string>
+    <string name="system_cache_summary">Puts the dalvik-cache of things in /system on /cache instead of /data</string>
 </resources>
