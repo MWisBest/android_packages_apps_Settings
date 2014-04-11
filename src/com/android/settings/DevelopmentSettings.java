@@ -147,7 +147,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final String ROOT_ACCESS_PROPERTY = "persist.sys.root_access";
 
     private static final String SYSTEM_CACHE_KEY = "system_cache";
-    private static final String SYSTEM_CACHE_PROPERTY = "persist.dalvik.vm.dexopt-data-only";
+    private static final String SYSTEM_CACHE_PROPERTY = "persist.dalvik.vm.dexopttocache";
 
     private static final String IMMEDIATELY_DESTROY_ACTIVITIES_KEY
             = "immediately_destroy_activities";
@@ -1259,12 +1259,12 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     }
 
     private void writeSystemCacheOptions() {
-        SystemProperties.set(SYSTEM_CACHE_PROPERTY, mSystemCache.isChecked() ? "0" : "1");
+        SystemProperties.set(SYSTEM_CACHE_PROPERTY, mSystemCache.isChecked() ? "1" : "0");
         pokeSystemProperties();
     }
 
     private void updateSystemCacheOptions() {
-        mSystemCache.setChecked(SystemProperties.getInt(SYSTEM_CACHE_PROPERTY, 1) == 0);
+        mSystemCache.setChecked(SystemProperties.getInt(SYSTEM_CACHE_PROPERTY, 0) == 1);
     }
 
     @Override
